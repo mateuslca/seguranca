@@ -43,11 +43,12 @@ def decrypt_message(encrypted_message, iv: str) -> str:
 message = "Hello from client"
 
 # Envia para o servidor
-for i in range(1):
+for i in range(10):
   iv = get_random_bytes(16)  # IV aleatório
 
   encrypted_message = encrypt_message(message, iv)
   payload = build_payload(encrypted_message, iv)
+  print(payload)
   response = requests.post('http://127.0.0.1:5000/decrypt', json=payload)
 
   try:
