@@ -47,7 +47,13 @@ def main(args):
   with open("private_key.pem", "rb") as f:
       private_key = serialization.load_pem_private_key(f.read(), password=None)
 
-  decrypt_directory(input_path, private_key)
+  for root, _, files in os.walk(input_path):
+        for file in files:
+          filepath = os.path.join(root, file)
+          if not filepath.endswith(".enc"):
+                continue
+          decrypt_file(filepath, private_key)
+          
   print("Arquivos descriptografados com sucesso!")
 
 if __name__ == "__main__":

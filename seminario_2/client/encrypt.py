@@ -47,7 +47,7 @@ def main(args):
       public_key = serialization.load_pem_public_key(f.read())
 
   total_files = sum(len(files) for _, _, files in os.walk(input_path))
-  limit = 4
+  limit = 5
 
   for root, _, files in os.walk(input_path):
         for file in files:
