@@ -1,0 +1,9 @@
+2025-04-02 11:25:33,930 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://172.20.10.6:8080
+2025-04-02 11:25:33,931 - [33mPress CTRL+C to quit[0m
+2025-04-02 11:26:17,855 - Intruder Alert! IP: 127.0.0.1, Location: Unknown, Unknown, Unknown - ISP: Unknown, Method: GET, Path: /test, Headers: {'Host': 'localhost:8080', 'User-Agent': 'curl/8.10.1', 'Accept': '*/*'}
+2025-04-02 11:26:17,877 - 127.0.0.1 - - [02/Apr/2025 11:26:17] "[31m[1mGET /test HTTP/1.1[0m" 403 -
+2025-04-02 11:26:48,813 - Intruder Alert! IP: 127.0.0.1, Location: Unknown, Unknown, Unknown - ISP: Unknown, Method: POST, Path: /test, Headers: {'Host': 'localhost:8080', 'User-Agent': 'curl/8.10.1', 'Accept': '*/*'}
+2025-04-02 11:26:48,836 - 127.0.0.1 - - [02/Apr/2025 11:26:48] "[31m[1mPOST /test HTTP/1.1[0m" 403 -
