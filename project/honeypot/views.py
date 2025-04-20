@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import HoneypotLog
 
 def home(request):
     ip_address = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -8,11 +9,13 @@ def home(request):
     else:
         ip_address = request.META.get('REMOTE_ADDR')
 
-    print(ip_address)
-    print(request.user)
-    print(request.method + " " + request.path)
-    print(request.body)
-    print(request.GET)
-    print(request.POST)
+    log = HoneypotLog.objects.create(
+        username=request.user, 
+        ipv4_address=ip_address, 
+        ipv6_address=ip_address, 
+        action=request.method + " " + request.path, 
+        get_params=request.GET,
+        post_params= request.POST
+    )
 
     return HttpResponse(f'<h1>Honeypot!</h1>')
