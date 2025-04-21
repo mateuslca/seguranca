@@ -8,40 +8,35 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Caminho para os logs
 base_dir = Path(__file__).resolve().parent.parent
-creds_log_path = base_dir / 'log_files' / 'creds_audits.log'
-cmds_log_path = base_dir / 'log_files' / 'cmd_audits.log'
+http_log_path = base_dir / 'log_files' / 'http_audit.log'
 
 @csrf_exempt
 def simple_dashboard(request):
     # Leitura básica dos logs
     try:
-        colnames=['ip_address', 'username', 'password'] 
-        creds_df = pd.read_csv(creds_log_path, names=colnames)
-        colnames=['ip_address', 'username', 'password'] 
-        cmds_df = pd.read_csv(cmds_log_path)
+        colnames=['date', 'ip_address', 'username', 'password'] 
+        http_df = pd.read_csv(http_log_path, names=colnames)
+
         
-        print(cmds_df.head())
+        print(http_df.head())
         print("\n"*10)
         print("-"*10)
+
     except Exception as e:
         return render(request, "dashboard.html", {
             "error": f"Erro ao carregar logs: {e}",
         })
 
     # Exemplo de estatísticas simples
-    top_ips = creds_df['ip_address'].value_counts().head(5).reset_index()
+    top_ips = http_df['ip_address'].value_counts().head(5).reset_index()
     top_ips.columns = ['ip_address', 'count']
 
-    top_usernames = creds_df['username'].value_counts().head(5).reset_index()
+    top_usernames = http_df['username'].value_counts().head(5).reset_index()
     top_usernames.columns = ['username', 'count']
-
-    top_cmds = cmds_df['Command'].value_counts().head(5).reset_index()
-    top_cmds.columns = ['command', 'count']
 
     return render(request, "dashboard.html", {
         "top_ips": top_ips.to_dict(orient="records"),
         "top_usernames": top_usernames.to_dict(orient="records"),
-        "top_cmds": top_cmds.to_dict(orient="records"),
     })
 
 
@@ -72,7 +67,7 @@ def wp_admin_login(request: HttpRequest) -> HttpResponse:
         password = request.POST.get("password")
         ip = request.META.get('REMOTE_ADDR')
 
-        funnel_logger.info(f"Client with IP Address: {ip} entered\n Username: {username}, Password: {password}")
+        funnel_logger.info(f', {ip}, {username}, {password}')
 
         if username == HONEYPOT_USERNAME and password == HONEYPOT_PASSWORD:
             return HttpResponse("Please go to https://r.mtdv.me/gYVb1JYxGw")
