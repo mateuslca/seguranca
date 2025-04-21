@@ -8,8 +8,8 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('-a', '--address', type=str, required=True)
         parser.add_argument('-p', '--port', type=int, required=True)
-        parser.add_argument('-u', '--username', type=str)
-        parser.add_argument('-w', '--password', type=str)
+        parser.add_argument('-u', '--username', type=str, default="admin")
+        parser.add_argument('-w', '--password', type=str, default="deeboodah")
         parser.add_argument('--ssh', action='store_true', help='Executa o honeypot SSH')
         parser.add_argument('--http', action='store_true', help='Executa o honeypot HTTP com servidor Django embutido')
         parser.add_argument('--tarpit', action='store_true', help='Ativa o tarpit para SSH')
