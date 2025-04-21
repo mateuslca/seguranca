@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from .models import HoneypotLog
 
-def home(request):
+def honeypot_login(request):
     if request.method == 'POST':
         ip_address = request.META.get('HTTP_X_FORWARDED_FOR') or request.META.get('REMOTE_ADDR')
         HoneypotLog.objects.create(
