@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log in | Django site admin</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/login.css' %}">
+    <meta name="robots" content="NONE,NOARCHIVE">
+</head>
+<body class="login">
+
+<div id="container">
+    <div id="header">
+        <div id="branding">
+            <h1 id="site-name" style="font-size:24px">Django administration</h1>
+        </div>
+    </div>
+
+    <div id="content">
+        {% if error_message %}
+        <div class="errornote">
+            {{ error_message }}
+        </div>
+        {% endif %}
+
+        <form method="post" id="login-form" action="">
+            {% csrf_token %}
+            <div class="form-row">
+                <label for="id_username">Username:</label>
+                <input type="text" name="username" id="id_username" autofocus>
+            </div>
+            <div class="form-row">
+                <label for="id_password">Password:</label>
+                <input type="password" name="password" id="id_password">
+            </div>
+            <div class="submit-row">
+                <input type="submit" value="Log in">
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

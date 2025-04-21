@@ -2,13 +2,10 @@ from django.db import models
 
 
 class HoneypotLog(models.Model):
-	created_at = models.DateTimeField(auto_now_add=True)
-	username = models.CharField(max_length=50)
-	ipv4_address = models.CharField(max_length=15)
-	ipv6_address = models.CharField(max_length=45)
-	action = models.TextField()
-	get_params = models.TextField()
-	post_params = models.TextField()
+	timestamp = models.DateTimeField(auto_now_add=True)
+	username = models.CharField(max_length=255, null=True, blank=True)
+	ipv4_address = models.GenericIPAddressField()
+	post_params = models.JSONField(default=dict)
 
 	def __str__(self):
-		return(f'{self.created_at} - {self.username} - {self.action}')
+		return(f'[{self.timestamp}] - {self.username} - {self.ipv4_address}')
